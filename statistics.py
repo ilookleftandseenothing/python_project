@@ -45,9 +45,9 @@ def median(data, frequency=None):
     Return the median value of the data.
 
     >>> median([1, 2, 3, 4, 5])
-    3
-    >>> median([12, 6, 7, 19, 2, 3]
-    6.5
+    3.0
+    >>> median(['10-20', '20-30', '30-40'], [1, 1, 1])
+    24.5
     '''
     # for grouped data
     if frequency is not None:
@@ -90,14 +90,15 @@ def median(data, frequency=None):
         return result
 
     # for single data
+
     # arranged the data from smallest to largest
     arranged = sorted(data)
 
-    # for even value of number
+    # for even number of data
     if len(data) % 2 == 0:
         return (arranged[len(data)//2-1] + arranged[len(data)//2-2])/2
 
-    # for odd value of number
+    # for odd number of data
     else:
         return (arranged[len(list_of_number)//2])
 
@@ -107,8 +108,8 @@ def mode(data, frequency=None):
 
     >>> mode([1, 3, 2, 6, 3])
     3
-    >>> mode([1, 2, 3, 4, 5])
-    'No Mode'
+    >>> mode(['150-158', '159-167', '168-176', '177-185', '186-194', '195-203', '204-212'], [1, 1, 5, 5, 5
+    [176.0, 181.0, 186.0]
     '''
     # for grouped data
     if frequency is not None:
@@ -138,7 +139,7 @@ def mode(data, frequency=None):
         result = []
         for i in range(len(mode_class)):
             
-            # special case when modus class is in first
+            # when modus class is in first
             if mode_class[i] == 0:
 
                 # frequency in each class
@@ -154,7 +155,7 @@ def mode(data, frequency=None):
 
                 result.append(mode)
 
-            # special case when mode class is the last
+            # when mode class is the last
             elif mode_class[i] == len(frequency) - 1:
                 f1 = frequency[mode_class[i] * 2]
                 f0 = frequency[mode_class[i] - 1]
@@ -164,23 +165,25 @@ def mode(data, frequency=None):
                 mode = L + intv_class*(f1-f0/(2*f1 - f0 - f2))
 
                 result.append(mode)
+
+            # when mode class between other mode class
+            elif frequency[mode_class[i]] == frequency[mode_class[i] - 1] andfrequency[mode_class[i]] == frequency[mode_class[i] + 1]:
+
+                mode = (data_set[mode_class[i] * 2 + 1] + data_set[mode_class[i] * 2])/2
+                
+                result.append(mode)
         
             else:
-               # f1 = frequency[mode_class[i] * 2]
-              #  f0 = frequency[mode_class[i] - 1]
-             #   f2 = frequency[mode_class[i] + 1]
+                f1 = frequency[mode_class[i]]
+                f0 = frequency[mode_class[i] - 1]
+                f2 = frequency[mode_class[i] + 1]
                 
-                # determine the d1 and d2
-                d1 = frequency[mode_class[i]] - frequency[mode[i] - 1]
-                d2 = frequency[mode_class[i]] - frequency[mode[i] + 1]
-
                 L = data_set[mode_class[i] * 2]
 
-                mode = L + intv_class * (d1/(d1 + d2))
-
-                #mode = L + intv_class * ((f1-f0)/(2*f1 - f0 - f2))
+                mode = L + intv_class * ((f1-f0)/(2*f1 - f0 - f2))
 
                 result.append(mode)
+
         if len(result) == len(frequency):
             return 'Your Data Has No Mode Value'
 
